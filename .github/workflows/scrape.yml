@@ -43,4 +43,6 @@ jobs:
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: |
+          echo "✅ MONGO_URI from env: $MONGO_URI"
           python scrape_fmkorea.py
+
