@@ -8,7 +8,7 @@ import time
 import os
 
 MONGO_URI = os.getenv('MONGO_URI')  # 👈 이 방식으로 교체
-print(MONGO_URI)
+print("몽고디비: "+MONGO_URI)
 def setup_driver():
     chrome_options = Options()
     chrome_options.add_argument('--headless=new')
