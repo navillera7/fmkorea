@@ -2,8 +2,8 @@ name: Daily FMKorea Scraper
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # 매일 오전 6시 UTC (한국 시간 오후 3시)
-  workflow_dispatch:      # 수동 실행도 가능하게
+    - cron: '0 6 * * *'
+  workflow_dispatch:
 
 jobs:
   scrape:
@@ -20,10 +20,23 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
           sudo apt update
-          sudo apt install -y chromium-driver
-          sudo apt install -y chromium-browser || true
+          sudo apt install -y wget unzip
+          sudo apt install -y xvfb libxi6 libgconf-2-4
+          sudo apt install -y default-jdk
+
+          # ✅ Chrome 설치
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt install -y ./google-chrome-stable_current_amd64.deb
+
+          # ✅ chromedriver 설치
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+          wget -q https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+
+          pip install -r requirements.txt
 
       - name: Run scraper
         env:
