@@ -21,9 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y wget unzip
-          sudo apt install -y xvfb libxi6 libgconf-2-4
-          sudo apt install -y default-jdk
+          sudo apt install -y wget unzip xvfb default-jdk libxi6
 
           # ✅ Chrome 설치
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
